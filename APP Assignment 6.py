@@ -22,23 +22,23 @@ def knapsack_top_down(values, weights, W):
     memo = [[-1 for _ in range(W + 1)] for _ in range(n + 1)]           #creates a table filled with -1 meaning we havent calculated best value yet 
 
     def solve(i, w):
-        if i == 0 or w == 0:
+        if i == 0 or w == 0:                            #No items or no capacity
             return 0
 
         if memo[i][w] != -1:                            #checks if previously calculated
             return memo[i][w]
 
-        if weights[i - 1] <= w:
+        if weights[i - 1] <= w:                         #Check if current item can fit
             memo[i][w] = max(
                 solve(i - 1, w),
                 solve(i - 1, w - weights[i - 1]) + values[i - 1]
             )
         else:
-            memo[i][w] = solve(i - 1, w)
+            memo[i][w] = solve(i - 1, w)        #skip if item too heavy
 
         return memo[i][w]                       # Start with all items and full capacity
 
-    return solve(n, W)
+    return solve(n, W)                         # Start with all items and full capacity
 
 
 # Example Input
